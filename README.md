@@ -8,6 +8,7 @@ Bu projede kullanıcı bilgilerinin ve araç bilgilerinin saklandığı ve yöne
 
 ### Ön Şartlar:
 - PostgreSQL veritabanının kurulu olması
+- Postman kurulumu.
 
 ## Proje Yapılandırması ve Bağımlılıkları
 
@@ -85,3 +86,16 @@ jwt:
   issuer: ${MOBILIZ_ISSUER}
   audience: ${MOBILIZ_AUDIENCE}
 ```
+### Postman ile Test Etme
+Bu projeyi test etmek için Postman kullanmanızı öneriyoruz. Postman, API test etme işlemlerinizi basit, hızlı ve güvenilir bir şekilde gerçekleştirmenizi sağlar.
+
+#### Adımlar:
+1. Postman Kurulumu: Eğer bilgisayarınızda Postman yüklü değilse, resmi web sitesi üzerinden indirebilir ve kurulumunu gerçekleştirebilirsiniz.
+
+2. API Endpoints'ini İmport Etme: Postman'da, Import butonuna tıklayarak projenizin API endpoint'lerini içeren bir JSON veya Postman koleksiyonunu import edebilirsiniz. Bu sayede tüm endpoint'leri tek seferde Postman'a eklemiş olursunuz.
+
+3. İstek Gönderme: Endpoint'lerinizi Postman üzerinden test etmek için, ilgili HTTP metodu (GET, POST, PUT, DELETE vb.) seçilerek API'nizin URL'ini yazabilir ve Send butonuna tıklayarak isteği gönderebilirsiniz.
+
+4. Sonuçları İnceleme: İstek sonucu dönen cevabı Postman'ın alt kısmında bulunan bölümden inceleyebilirsiniz.
+
+Not: Projede kullanılan JWT veya benzeri bir kimlik doğrulama yöntemi bulunmaktadır, bu bilgileri `Swagger Ui` dan alıp `Authorization` kısmına `Bearer` token olarak eklemeyi unutmayın.
