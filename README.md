@@ -64,9 +64,11 @@ spring:
     url: jdbc:postgresql://localhost:5432/VehicleMicroService
 
 
-
+```
 **User Microservice için:**
 
+
+```yaml
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
