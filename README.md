@@ -75,3 +75,14 @@ spring:
     username: postgres
     password: root
     url: jdbc:postgresql://localhost:5432/UserMicroService
+```
+**JWT Ayarları:**
+Kullanıcı doğrulama ve yetkilendirme için JWT ayarlarıdır. Bu değerler ortam değişkenlerinden alınır.
+
+```yaml
+Copy code
+jwt:
+  secretkey: ${MOBILIZ_SECRETKEY}
+  issuer: ${MOBILIZ_ISSUER}
+  audience: ${MOBILIZ_AUDIENCE}
+```
