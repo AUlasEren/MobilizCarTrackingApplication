@@ -7,8 +7,34 @@ Bu projede kullanıcı bilgilerinin ve araç bilgilerinin saklandığı ve yöne
 ## Başlangıç
 
 ### Ön Şartlar:
-- PostgreSQL veritabanının kurulu olması.
-- Projede kullanılan bağımlılıkların ve kütüphanelerin indirilmiş olması.
+- PostgreSQL veritabanının kurulu olması
+
+## Proje Yapılandırması ve Bağımlılıkları
+
+### Eklentiler:
+
+- Java
+- Spring Boot (version 2.7.9)
+- Spring Dependency Management (version 1.0.15.RELEASE)
+- Application
+
+### Genel Ayarlar:
+
+- Grup: `com.mobiliz`
+- Versiyon: `v.0.1`
+- Java Sürümü: 17 (Hem kaynak hem de hedef için)
+- Kodlama: `UTF-8`
+
+### Bağımlılıklar:
+
+- Spring Boot Web: `libs.springBootWeb`
+- Lombok (Sadece derleme için): `libs.lombok`
+- Mapstruct İşlemci: `libs.mapstructProcessor`
+- Mapstruct: `libs.mapstruct`
+- Swagger UI: `libs.swaggerui`
+- Spring Boot Validation: `libs.springBootValidation`
+
+Bağımlılıklar `${rootDir}/dependencies.gradle` dosyasından uygulanır.
 
 ### Kurulum:
 
