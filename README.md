@@ -67,7 +67,6 @@ spring:
 
 **User Microservice için:**
 
-```yaml
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
