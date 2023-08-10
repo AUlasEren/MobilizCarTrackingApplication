@@ -1,8 +1,8 @@
 # MobilizCarTrackingApplication
-User & Vehicle Management Microservices
+#User & Vehicle Management Microservices
 Bu projede kullanıcı bilgilerinin ve araç bilgilerinin saklandığı ve yönetildiği iki mikroservis bulunmaktadır.
 
-Başlangıç
+# Başlangıç
 Ön Şartlar:
 PostgreSQL veritabanının kurulu olması.
 Projede kullanılan bağımlılıkların ve kütüphanelerin indirilmiş olması.
@@ -19,8 +19,6 @@ User Microservice için varsayılan port 8081'dir.
 Veritabanı Ayarları:
 
 Vehicle Microservice için:
-yaml
-Copy code
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -28,8 +26,6 @@ spring:
     password: root
     url: jdbc:postgresql://localhost:5432/VehicleMicroService
 User Microservice için:
-yaml
-Copy code
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -37,17 +33,11 @@ spring:
     password: root
     url: jdbc:postgresql://localhost:5432/UserMicroService
 Hibernate Ayarları: Her iki servis için de veritabanı şemasının otomatik olarak güncellenmesini sağlar.
-
-yaml
-Copy code
 spring:
   jpa:
     hibernate:
       ddl-auto: update
-JWT Ayarları: Kullanıcı doğrulama ve yetkilendirme için JWT ayarlarıdır. Bu değerler ortam değişkenlerinden alınır.
-
-yaml
-Copy code
+#JWT Ayarları: Kullanıcı doğrulama ve yetkilendirme için JWT ayarlarıdır. Bu değerler ortam değişkenlerinden alınır.
 jwt:
   secretkey: ${MOBILIZ_SECRETKEY}
   issuer: ${MOBILIZ_ISSUER}
