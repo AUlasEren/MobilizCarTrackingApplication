@@ -23,6 +23,7 @@ public class Vehicle extends BaseEntity {
     private Long vehicleId;
     private Long companyId;
     private Long regionId;
+    //
     @Column(nullable = false, unique = true)
     private String plate;
     private String chasisNumber;
