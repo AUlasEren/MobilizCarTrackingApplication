@@ -15,8 +15,7 @@ import com.mobiliz.utility.JwtTokenManager;
 import com.mobiliz.utility.ServiceManager;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
-import java.util.Optional;
+import java.util.*;
 import java.util.stream.Collectors;
 
 @Service
@@ -75,8 +74,10 @@ public class VehicleService extends ServiceManager<Vehicle,Long> {
         List<Vehicle> vehicleList1 = findAll().stream()
                 .filter(x ->x.getCompanyId().equals(companyId.get()) &&parentList.contains(x.getRegionId()))
                 .collect(Collectors.toList());
-        vehicleList.stream().forEach(x-> vehicleList1.add(x));
-        return vehicleList1;
+        Set<Vehicle> vehicleSet = new HashSet<>(vehicleList);
+        vehicleSet.addAll(vehicleList1);
+        return new ArrayList<>(vehicleSet);
+
 
     }
 
