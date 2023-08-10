@@ -37,3 +37,14 @@ spring:
     password: root
     url: jdbc:postgresql://localhost:5432/VehicleMicroService
 
+
+
+**User Microservice için:**
+
+```yaml
+spring:
+  datasource:
+    driver-class-name: org.postgresql.Driver
+    username: postgres
+    password: root
+    url: jdbc:postgresql://localhost:5432/UserMicroService
