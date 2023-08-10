@@ -27,7 +27,7 @@ spring:
     password: root
     url: jdbc:postgresql://localhost:5432/VehicleMicroService
     
-  User Microservice için:
+User Microservice için:
 
 spring:
   datasource:
