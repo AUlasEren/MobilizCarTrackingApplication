@@ -19,6 +19,7 @@ User Microservice için varsayılan port 8081'dir.
 Veritabanı Ayarları:
 
 Vehicle Microservice için:
+Inline `code` has `back-ticks around` it.
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -37,11 +38,11 @@ spring:
   jpa:
     hibernate:
       ddl-auto: update
-### JWT Ayarları: Kullanıcı doğrulama ve yetkilendirme için JWT ayarlarıdır. Bu değerler ortam değişkenlerinden alınır.
+### JWT Ayarları: 
+Kullanıcı doğrulama ve yetkilendirme için JWT ayarlarıdır. Bu değerler ortam değişkenlerinden alınır.
 jwt:
   secretkey: ${MOBILIZ_SECRETKEY}
   issuer: ${MOBILIZ_ISSUER}
   audience: ${MOBILIZ_AUDIENCE}
-Katkıda Bulunanlar
-Bu projeye katkıda bulunmak isterseniz, lütfen öncelikle konuyu tartışmak için bir konu açınız.
+
 
