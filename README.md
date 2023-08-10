@@ -19,7 +19,7 @@ User Microservice için varsayılan port 8081'dir.
 Veritabanı Ayarları:
 
 Vehicle Microservice için:
-Inline `code` has `back-ticks around` it.
+```
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
@@ -27,6 +27,7 @@ spring:
     password: root
     url: jdbc:postgresql://localhost:5432/VehicleMicroService
 User Microservice için:
+```
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
