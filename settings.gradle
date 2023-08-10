@@ -1,0 +1,5 @@
+rootProject.name = 'MobilizCarTrackingApplication'
+include 'UserAuthenticationMicroService'
+include 'VehicleMicroService'
+
+
