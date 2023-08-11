@@ -22,11 +22,11 @@ public class UserAuthenticationSecurityConfig {
         httpSecurity.authorizeRequests().antMatchers(
                         "/v3/api-docs/**",
                         "/swagger-ui/**",
+                        "/swagger-ui**",
                         "/api/v1/vehicle/**").permitAll().anyRequest().authenticated()
                 .and()
                 .cors().and().csrf().disable();
         httpSecurity.addFilterBefore(getJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
         return httpSecurity.build();
     }
-
 }

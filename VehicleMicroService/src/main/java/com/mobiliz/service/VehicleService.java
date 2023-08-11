@@ -26,21 +26,32 @@ public class VehicleService extends ServiceManager<Vehicle,Long> {
 
     public VehicleService(IVehicleRepository iVehicleRepository, JwtTokenManager jwtTokenManager, RegionService regionService) {
         super(iVehicleRepository);
-        this.iVehicleRepository=iVehicleRepository;
-        this.jwtTokenManager=jwtTokenManager;
+        this.iVehicleRepository = iVehicleRepository;
+        this.jwtTokenManager = jwtTokenManager;
         this.regionService = regionService;
     }
 
 
-    public MessageResponseDto create(CreateVehicleRequestDto dto) {
+    public MessageResponseDto create(CreateVehicleRequestDto dto, String bearerToken) {
+        if (!dto.getCompanyId().equals(getCompanyIdFromBearerToken(bearerToken))) {
+            throw new VehicleManagerException(EErrorType.COMPANY_ID_MISMATCH);
+        }
+        if (regionService.findById(dto.getRegionId()).isEmpty()) {
+            throw new VehicleManagerException(EErrorType.REGION_NOT_FOUND);
+        }
+        if (!getRegionsFromBearerToken(bearerToken).contains(dto.getCompanyId())){
+            throw new VehicleManagerException(EErrorType.REGION_MISMATCH);
+        }
         Vehicle vehicle = IVehicleMapper.INSTANCE.toVehicle(dto);
-        Region region = regionService.saveRegion(dto.getCreateRegionDto());
-        vehicle.setRegionId(region.getRegionId());
         save(vehicle);
         return MessageResponseDto.builder().message("Vehicle has created successfully").build();
     }
-    public MessageResponseDto update(UpdateVehicleRequestDto dto){
+
+    public MessageResponseDto update(UpdateVehicleRequestDto dto, String bearerToken) {
         Optional<Vehicle> vehicle = iVehicleRepository.findById(dto.getVehicleId());
+        if (!vehicle.get().getCompanyId().equals(getCompanyIdFromBearerToken(bearerToken))) {
+            throw new VehicleManagerException(EErrorType.COMPANY_ID_MISMATCH);
+        }
         if (vehicle.isEmpty()) {
             throw new VehicleManagerException(EErrorType.VEHICLE_NOT_FOUND);
         }
@@ -52,10 +63,14 @@ public class VehicleService extends ServiceManager<Vehicle,Long> {
         toUpdateVehicle.setChasisNumber(dto.getChasisNumber());
         toUpdateVehicle.setPlate(dto.getPlate());
         update(toUpdateVehicle);
-         return MessageResponseDto.builder().message("Vehicle has updated successfully").build();
+        return MessageResponseDto.builder().message("Vehicle has updated successfully").build();
     }
-    public MessageResponseDto deleteVehicle(Long id) {
+
+    public MessageResponseDto deleteVehicle(Long id, String bearerToken) {
         Optional<Vehicle> vehicle = iVehicleRepository.findById(id);
+        if (!vehicle.get().getCompanyId().equals(getCompanyIdFromBearerToken(bearerToken))) {
+            throw new VehicleManagerException(EErrorType.COMPANY_ID_MISMATCH);
+        }
         if (vehicle.isEmpty()) {
             throw new VehicleManagerException(EErrorType.VEHICLE_NOT_FOUND);
         }
@@ -64,23 +79,25 @@ public class VehicleService extends ServiceManager<Vehicle,Long> {
         return MessageResponseDto.builder().message("Vehicle has deleted successfully").build();
     }
 
-    public List<Vehicle> findAllVehicle(TokenRequestDto dto) {
-        Optional<Long> companyId = jwtTokenManager.getCompanyIdFromToken(dto.getToken());
-        List<Long> regions = jwtTokenManager.getRegionIdFromToken(dto.getToken());
-        List<Long> parentList = regionService.findAll().stream().filter(x->regions.contains(x.getParentId())).map(y->y.getRegionId()).toList();
-        List<Vehicle> vehicleList = findAll().stream()
-                .filter(x -> x.getCompanyId().equals(companyId.get()) && regions.contains(x.getRegionId()))
+    public List<Vehicle> findAllVehicle(String bearerToken) {
+        Long companyId = getCompanyIdFromBearerToken(bearerToken);
+        List<Long> regions = jwtTokenManager.getRegionIdFromToken(bearerToken.substring(7));
+        return findAll().stream()
+                .filter(x -> x.getCompanyId().equals(companyId) && regions.contains(x.getRegionId()))
                 .collect(Collectors.toList());
-        List<Vehicle> vehicleList1 = findAll().stream()
-                .filter(x ->x.getCompanyId().equals(companyId.get()) &&parentList.contains(x.getRegionId()))
-                .collect(Collectors.toList());
-        Set<Vehicle> vehicleSet = new HashSet<>(vehicleList);
-        vehicleSet.addAll(vehicleList1);
-        return new ArrayList<>(vehicleSet);
-
-
     }
 
 
+    private Long getCompanyIdFromBearerToken(String bearerToken) {
+        Optional<Long> companyIdFromToken = jwtTokenManager.getCompanyIdFromToken(bearerToken.substring(7));
+        if (companyIdFromToken.isEmpty()) {
+            throw new VehicleManagerException(EErrorType.COMPANY_ID_MISMATCH);
+        }
+        return companyIdFromToken.get();
+    }
+
+    private List<Long> getRegionsFromBearerToken(String bearerToken) {
+        return jwtTokenManager.getRegionIdFromToken(bearerToken.substring(7));
+    }
 
 }

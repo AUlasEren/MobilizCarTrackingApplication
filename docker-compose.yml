@@ -1,0 +1,67 @@
+version: '3.4'
+
+services:
+  user-auth:
+    ports:
+      - 8081:8081
+    environment:
+      - MOBILIZ_SECRETKEY=${MOBILIZ_SECRETKEY}
+      - MOBILIZ_ISSUER=${MOBILIZ_ISSUER}
+      - MOBILIZ_AUDIENCE=${MOBILIZ_AUDIENCE}
+      - POSTGRES=postgres-user-auth
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASS=${POSTGRES_PASS}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+    build:
+      dockerfile: Dockerfile
+      target: user-auth-micro-service
+    depends_on:
+      postgres-user-auth:
+        condition: service_healthy
+  vehicle:
+    ports:
+      - 8082:8082
+    environment:
+      - MOBILIZ_SECRETKEY=${MOBILIZ_SECRETKEY}
+      - MOBILIZ_ISSUER=${MOBILIZ_ISSUER}
+      - MOBILIZ_AUDIENCE=${MOBILIZ_AUDIENCE}
+      - POSTGRES=postgres-vehicle
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASS=${POSTGRES_PASS}
+      - POSTGRES_PORT=${POSTGRES_PORT}
+    build:
+      dockerfile: Dockerfile
+      target: vehicle-micro-service
+    depends_on:
+      postgres-vehicle:
+        condition: service_healthy
+  postgres-user-auth:
+    image: postgres:latest
+    ports:
+      - 5432
+    volumes:
+      - ./dataUser:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=user
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASS}
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+  postgres-vehicle:
+    image: postgres:latest
+    ports:
+      - 5432
+    volumes:
+      - ./dataVehicle:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=vehicle
+      - POSTGRES_USER=${POSTGRES_USER}
+      - POSTGRES_PASSWORD=${POSTGRES_PASS}
+    healthcheck:
+      test: [ "CMD-SHELL", "pg_isready" ]
+      interval: 10s
+      timeout: 5s
+      retries: 5

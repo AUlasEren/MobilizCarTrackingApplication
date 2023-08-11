@@ -22,7 +22,7 @@ public class CreateVehicleRequestDto {
     @NotBlank(message = "Model can not be blank")
     private String model;
     private String modelYear;
-    private CreateRegionDto createRegionDto;
+    private Long regionId;
 
 
 }

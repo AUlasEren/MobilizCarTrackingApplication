@@ -22,6 +22,7 @@ public class UserAuthenticationSecurityConfig {
         httpSecurity.authorizeRequests().antMatchers(
                         "/v3/api-docs/**",
                         "/swagger-ui/**",
+                        "/swagger-ui**",
                         "/api/v1/user-authentication/**").permitAll().anyRequest().authenticated()
                 .and()
                 .cors().and().csrf().disable();

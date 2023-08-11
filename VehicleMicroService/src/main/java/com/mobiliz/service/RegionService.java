@@ -3,6 +3,7 @@ package com.mobiliz.service;
 
 import com.mobiliz.dto.request.CreateRegionDto;
 import com.mobiliz.dto.response.MessageResponseDto;
+import com.mobiliz.dto.response.RegionCreateResponseDto;
 import com.mobiliz.mapper.IVehicleMapper;
 import com.mobiliz.repository.IRegionRepository;
 import com.mobiliz.repository.entity.Region;
@@ -18,9 +19,10 @@ public class RegionService extends ServiceManager<Region,Long> {
         super(regionRepository);
         this.regionRepository = regionRepository;
     }
-    public Region saveRegion(CreateRegionDto dto) {
-        Region region = IVehicleMapper.INSTANCE.toRegion(dto);
-        return save(region);
-    }
 
+    public RegionCreateResponseDto create(CreateRegionDto dto) {
+        Region region = IVehicleMapper.INSTANCE.toRegion(dto);
+        Region savedRegion = save(region);
+        return RegionCreateResponseDto.builder().regionId(savedRegion.getRegionId()).build();
+    }
 }

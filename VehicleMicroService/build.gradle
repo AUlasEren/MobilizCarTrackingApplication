@@ -8,5 +8,5 @@ dependencies {
     implementation libs.springBootDataJpa
     implementation libs.jwt
     implementation libs.springBootStarterSecurity
-
+    implementation libs.swaggerui
 }

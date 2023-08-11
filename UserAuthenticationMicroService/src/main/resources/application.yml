@@ -3,9 +3,9 @@ server:
 spring:
   datasource:
     driver-class-name: org.postgresql.Driver
-    username: postgres
-    password: root
-    url: jdbc:postgresql://localhost:5432/UserMicroService
+    username: ${POSTGRES_USER}
+    password: ${POSTGRES_PASS}
+    url: jdbc:postgresql://${POSTGRES}:${POSTGRES_PORT}/user
   jpa:
     hibernate:
       ddl-auto: update
