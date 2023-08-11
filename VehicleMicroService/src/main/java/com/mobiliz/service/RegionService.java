@@ -23,6 +23,7 @@ public class RegionService extends ServiceManager<Region,Long> {
     public RegionCreateResponseDto create(CreateRegionDto dto) {
         Region region = IVehicleMapper.INSTANCE.toRegion(dto);
         Region savedRegion = save(region);
+        //
         return RegionCreateResponseDto.builder().regionId(savedRegion.getRegionId()).build();
     }
 }
