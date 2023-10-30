@@ -39,7 +39,7 @@ public class VehicleService extends ServiceManager<Vehicle,Long> {
         if (regionService.findById(dto.getRegionId()).isEmpty()) {
             throw new VehicleManagerException(EErrorType.REGION_NOT_FOUND);
         }
-        if (!getRegionsFromBearerToken(bearerToken).contains(dto.getCompanyId())){
+        if (!getRegionsFromBearerToken(bearerToken).contains(dto.getRegionId())){
             throw new VehicleManagerException(EErrorType.REGION_MISMATCH);
         }
         Vehicle vehicle = IVehicleMapper.INSTANCE.toVehicle(dto);
